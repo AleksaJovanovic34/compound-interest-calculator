@@ -1,101 +1,132 @@
-import Image from "next/image";
+'use client'
+
+import InputForm from "./ui/input-form";
+import ChartData from "./ui/chart";
+import { useState } from "react";
+
+interface YearlyData {
+  year: number;
+  savings: number;
+  interest: number;
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [inputValues, setInputValues] = useState<{
+    initialInvestment: number,
+    years: number,
+    interestRate: number,
+    compoundFrequency: 'Daily' | 'Monthly' | 'Annually',
+    contributionAmount: number,
+    contributionFrequency: 'Monthly' | 'Annually',
+  }>({
+    initialInvestment: 5000,
+    years: 5,
+    interestRate: 5,
+    compoundFrequency: 'Monthly',
+    contributionAmount: 100,
+    contributionFrequency: 'Monthly',
+  });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  const handleValuesChange = (updatedValues: {
+    initialInvestment?: number,
+    years?: number,
+    interestRate?: number,
+    compoundFrequency?: 'Daily' | 'Monthly' | 'Annually',
+    contributionAmount?: number,
+    contributionFrequency?: 'Monthly' | 'Annually'
+  }) => {
+    setInputValues({...inputValues, ...updatedValues});
+  }
+
+  const getCompoundFrequency = (freq: 'Daily' | 'Monthly' | 'Annually'): number => {
+    switch (freq) {
+      case 'Daily': return 365;
+      case 'Monthly': return 12;
+      case 'Annually': return 1;
+    }
+  }
+
+  const calculateData = (): {
+    yearlyData: YearlyData[],
+    totalSavings: number,
+    totalInterest: number
+  } => {
+    const {
+      initialInvestment,
+      years,
+      interestRate,
+      compoundFrequency,
+      contributionAmount,
+      contributionFrequency
+    } = inputValues;
+
+    const rate = interestRate / 100;
+    const compoundPeriods = getCompoundFrequency(compoundFrequency);
+    const ratePerPeriod = rate / compoundPeriods;
+    
+    // Convert contribution to the same frequency as compounding
+    const periodicContribution = contributionFrequency === 'Monthly' 
+      ? contributionAmount * (12 / compoundPeriods)
+      : contributionAmount / compoundPeriods;
+
+    const yearlyData: YearlyData[] = [];
+    let currentPrincipal = initialInvestment;
+    let previousValue = initialInvestment;
+
+    for (let year = 1; year <= years; year++) {
+      // Calculate for each compounding period in the year
+      const periodsThisYear = compoundPeriods;
+      let yearEndValue = previousValue;
+
+      for (let period = 1; period <= periodsThisYear; period++) {
+        yearEndValue = yearEndValue * (1 + ratePerPeriod) + periodicContribution;
+      }
+
+      const yearlyContributions = contributionFrequency === 'Monthly'
+        ? contributionAmount * 12
+        : contributionAmount;
+
+      currentPrincipal += yearlyContributions;
+      
+      const totalInterestThisYear = yearEndValue - currentPrincipal;
+      
+      yearlyData.push({
+        year,
+        savings: currentPrincipal,
+        interest: totalInterestThisYear
+      });
+
+      previousValue = yearEndValue;
+    }
+
+    const totalSavings = previousValue;
+    const totalInterest = totalSavings - currentPrincipal;
+
+    return {
+      yearlyData,
+      totalSavings,
+      totalInterest
+    };
+  };
+
+  const { yearlyData, totalSavings } = calculateData();
+  const savings = yearlyData.map(data => data.savings);
+  const interest = yearlyData.map(data => data.interest);
+  console.log(savings);
+  
+
+  return (
+    <div className="flex flex-col items-center w-full max-w-7xl mx-auto p-4">
+      <InputForm inputValues={inputValues} onValuesChange={handleValuesChange}/>
+      <div className="text-center my-4">
+        <h2 className="text-2xl font-bold">
+          Total Balance: ${totalSavings.toLocaleString(undefined, { 
+            minimumFractionDigits: 2, 
+            maximumFractionDigits: 2 
+          })}
+        </h2>
+      </div>
+      <ChartData savings={savings} interest={interest}/>
     </div>
   );
 }
