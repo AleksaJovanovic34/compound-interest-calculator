@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { Inter, Roboto_Mono } from 'next/font/google'
+import { Roboto_Mono } from 'next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] });
 const robotomono = Roboto_Mono({ subsets: ['latin'] })
