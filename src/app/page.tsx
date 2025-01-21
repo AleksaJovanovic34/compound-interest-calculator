@@ -49,7 +49,8 @@ export default function Home() {
   const calculateData = (): {
     yearlyData: YearlyData[],
     totalSavings: number,
-    totalInterest: number
+    totalInterest: number,
+    totalPrincipal: number
   } => {
     const {
       initialInvestment,
@@ -70,7 +71,7 @@ export default function Home() {
       : contributionAmount / compoundPeriods;
 
     const yearlyData: YearlyData[] = [];
-    let currentPrincipal = initialInvestment;
+    let totalPrincipal = initialInvestment;
     let previousValue = initialInvestment;
 
     for (let year = 1; year <= years; year++) {
@@ -86,13 +87,13 @@ export default function Home() {
         ? contributionAmount * 12
         : contributionAmount;
 
-      currentPrincipal += yearlyContributions;
+      totalPrincipal += yearlyContributions;
       
-      const totalInterestThisYear = yearEndValue - currentPrincipal;
+      const totalInterestThisYear = yearEndValue - totalPrincipal;
       
       yearlyData.push({
         year,
-        savings: currentPrincipal,
+        savings: totalPrincipal,
         interest: totalInterestThisYear
       });
 
@@ -100,33 +101,48 @@ export default function Home() {
     }
 
     const totalSavings = previousValue;
-    const totalInterest = totalSavings - currentPrincipal;
+    const totalInterest = totalSavings - totalPrincipal;
 
     return {
       yearlyData,
       totalSavings,
-      totalInterest
+      totalInterest,
+      totalPrincipal
     };
   };
 
-  const { yearlyData, totalSavings } = calculateData();
+  const { yearlyData, totalSavings, totalInterest, totalPrincipal } = calculateData();
   const savings = yearlyData.map(data => data.savings);
   const interest = yearlyData.map(data => data.interest);
   console.log(savings);
   
 
   return (
-    <div className="flex flex-col items-center w-full max-w-7xl mx-auto p-4">
-      <InputForm inputValues={inputValues} onValuesChange={handleValuesChange}/>
-      <div className="text-center my-4">
-        <h2 className="text-2xl font-bold">
-          Total Balance: ${totalSavings.toLocaleString(undefined, { 
-            minimumFractionDigits: 2, 
-            maximumFractionDigits: 2 
-          })}
-        </h2>
+    <div className="flex w-full min-h-screen items-center justify-center">
+      <div className="flex items-end">
+        <InputForm inputValues={inputValues} onValuesChange={handleValuesChange}/>
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-[800px]">
+            <div className="flex justify-between gap-2">
+              <div className="flex flex-col justify-center items-center bg-white h-20 flex-1 rounded-md shadow-lg">
+                <h3 className="font-bold text-sm">Total Balance</h3>
+                <p className="font-bold text-xl">${(totalSavings).toLocaleString()}</p>
+              </div>
+              <div className="flex flex-col justify-center items-center flex-1 rounded-md shadow-lg bg-[#664282] text-white">
+                <h3 className="font-light text-sm">Total Principal</h3>
+                <p className="font-bold text-xl">${totalPrincipal.toLocaleString()}</p>
+              </div>
+              <div className="flex flex-col justify-center items-center flex-1 rounded-md shadow-lg bg-[#99731a] text-white">
+                <h3 className="font-light text-sm">Total Interest</h3>
+                <p className="font-bold text-xl">${totalInterest.toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <ChartData savings={savings} interest={interest}/>
+          </div>
+        </div>
       </div>
-      <ChartData savings={savings} interest={interest}/>
-    </div>
+      </div>
   );
 }

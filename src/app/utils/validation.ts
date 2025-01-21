@@ -3,7 +3,7 @@ const validationRules = {
         required: true,
         min: 1,
         max: 1000000000,
-        message: 'Amount must be between 1 and 1,000,000,000'
+        message: 'Amount must be between 1 and 1B'
     },
 
     years: {
@@ -23,7 +23,7 @@ const validationRules = {
         required: false,
         min: 0, 
         max: 1000000,
-        message: 'Amount must be between 0 and 1,000,000'
+        message: 'Amount must be between 0 and 1M'
     }
 }
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import SelectField from "./RadixComponents/select-field";
 import Toggle from "./RadixComponents/toggle-group";
 import { validateField } from "../utils/validation";
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 
 
 interface InputFormProps {
@@ -37,9 +38,9 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
 
 
     return (
-        <div className="flex justify-center items-center min-h-screen">
+        <div className="flex justify-center items-center">
             <form className="w-80">
-                <div className="m-5 flex flex-col gap-3">
+                <div className="mx-5 flex flex-col gap-3">
                     {/* Initial Investment */}
                     <div className="w-full flex flex-col">
                         <label htmlFor="initialInvestment" className="text-black mb-1">
@@ -54,13 +55,17 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
                                 value={inputValues.initialInvestment.toLocaleString()}
                                 onChange={handleInputChange}
                                 maxLength={12}
-                                className={`w-full border-[0.5px] rounded-sm pl-7 p-3 ${
-                                    errors.initialInvestment ? "border-red-500 bg-red-100 focus:outline-red-500" : "border-black"
-                                } focus:outline-purple-400`}
+                                className={`w-full border-[0.5px] rounded-sm p-3 pl-8 ${
+                                    errors.initialInvestment 
+                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-2 focus:ring-[#800010] focus:outline-none" 
+                                    : "border-black focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
+                                }  `}
                             />
                         </div>
                         {errors.initialInvestment && (
-                            <p className="text-red-500 text-sm mt-1">{errors.initialInvestment}</p>
+                            <p className="text-[#800010] text-sm mt-1 flex">
+                                <span className="mt-1 mr-2"><ExclamationTriangleIcon/></span>
+                                {errors.initialInvestment}</p>
                         )}
                     </div>
 
@@ -79,12 +84,16 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
                                 onChange={handleInputChange}
                                 maxLength={2}
                                 className={`w-full border-[0.5px] rounded-sm p-3 ${
-                                    errors.years ? "border-red-500 bg-red-100 focus:outline-red-500" : "border-black"
-                                } focus:outline-purple-400`}
+                                    errors.years 
+                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-2 focus:ring-[#800010] focus:outline-none" 
+                                    : "border-black focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
+                                }  `}
                             />
                         </div>
                         {errors.years && (
-                                <p className="text-red-500 text-sm mt-1">{errors.years}</p>
+                                <p className="text-[#800010] text-sm mt-1 flex">
+                                    <span className="mt-1 mr-2"><ExclamationTriangleIcon/></span>
+                                    {errors.years}</p>
                             )}
                     </div>
 
@@ -103,12 +112,16 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
                                 onChange={handleInputChange}
                                 maxLength={2}
                                 className={`w-full border-[0.5px] rounded-sm p-3 ${
-                                    errors.interestRate ? "border-red-500 bg-red-100 focus:outline-red-500" : "border-black"
-                                } focus:outline-purple-400`}
+                                    errors.interestRate 
+                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-2 focus:ring-[#800010] focus:outline-none" 
+                                    : "border-black focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
+                                }  `}
                             />
                         </div>
                         {errors.interestRate && (
-                                <p className="text-red-500 text-sm mt-1">{errors.interestRate}</p>
+                                <p className="text-[#800010] text-sm mt-1 flex">
+                                    <span className="mt-1 mr-2"><ExclamationTriangleIcon/></span>
+                                    {errors.interestRate}</p>
                             )}
                     </div>
 
@@ -137,13 +150,17 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
                                 value={inputValues.contributionAmount.toLocaleString()}
                                 onChange={handleInputChange}
                                 maxLength={9}
-                                className={`w-full border-[0.5px] rounded-sm pl-7 p-3 ${
-                                    errors.contributionAmount ? "border-red-500 bg-red-100 focus:outline-red-500" : "border-black"
-                                } focus:outline-purple-400`}
+                                className={`w-full border-[0.5px] rounded-sm p-3 pl-8 ${
+                                    errors.contributionAmount 
+                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-2 focus:ring-[#800010] focus:outline-none" 
+                                    : "border-black focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
+                                }  `}
                             />
                         </div>
                         {errors.contributionAmount && (
-                                <p className="text-red-500 text-sm mt-1">{errors.contributionAmount}</p>
+                                <p className="text-[#800010] text-sm mt-1 flex">
+                                    <span className="mt-1 mr-2"><ExclamationTriangleIcon/></span>
+                                    {errors.contributionAmount}</p>
                             )}
                     </div>
 
