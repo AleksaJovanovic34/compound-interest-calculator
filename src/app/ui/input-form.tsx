@@ -2,7 +2,6 @@ import { useState } from "react";
 import SelectField from "./RadixComponents/select-field";
 import Toggle from "./RadixComponents/toggle-group";
 import { validateField } from "../utils/validation";
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 
 
 interface InputFormProps {
@@ -40,7 +39,7 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
     return (
         <div className="flex justify-center items-center">
             <form className="w-80">
-                <div className="mx-5 flex flex-col gap-3">
+                <div className="mx-5 flex flex-col gap-2">
                     {/* Initial Investment */}
                     <div className="w-full flex flex-col">
                         <label htmlFor="initialInvestment" className="text-black mb-1">
@@ -54,19 +53,19 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
                                 id="initialInvestment"
                                 value={inputValues.initialInvestment.toLocaleString()}
                                 onChange={handleInputChange}
-                                maxLength={12}
+                                maxLength={11}
                                 className={`w-full border-[0.5px] rounded-sm p-3 pl-8 ${
                                     errors.initialInvestment 
-                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-2 focus:ring-[#800010] focus:outline-none" 
+                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-1 focus:ring-[#800010] focus:outline-none" 
                                     : "border-black focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
                                 }  `}
                             />
                         </div>
-                        {errors.initialInvestment && (
+                        {/* {errors.initialInvestment && (
                             <p className="text-[#800010] text-sm mt-1 flex">
                                 <span className="mt-1 mr-2"><ExclamationTriangleIcon/></span>
                                 {errors.initialInvestment}</p>
-                        )}
+                        )} */}
                     </div>
 
                     {/* Years */}
@@ -85,16 +84,16 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
                                 maxLength={2}
                                 className={`w-full border-[0.5px] rounded-sm p-3 ${
                                     errors.years 
-                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-2 focus:ring-[#800010] focus:outline-none" 
+                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-1 focus:ring-[#800010] focus:outline-none" 
                                     : "border-black focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
                                 }  `}
                             />
                         </div>
-                        {errors.years && (
+                        {/* {errors.years && (
                                 <p className="text-[#800010] text-sm mt-1 flex">
                                     <span className="mt-1 mr-2"><ExclamationTriangleIcon/></span>
                                     {errors.years}</p>
-                            )}
+                            )} */}
                     </div>
 
                     {/* Interest Rate */}
@@ -113,16 +112,16 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
                                 maxLength={2}
                                 className={`w-full border-[0.5px] rounded-sm p-3 ${
                                     errors.interestRate 
-                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-2 focus:ring-[#800010] focus:outline-none" 
+                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-1 focus:ring-[#800010] focus:outline-none" 
                                     : "border-black focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
                                 }  `}
                             />
                         </div>
-                        {errors.interestRate && (
+                        {/* {errors.interestRate && (
                                 <p className="text-[#800010] text-sm mt-1 flex">
                                     <span className="mt-1 mr-2"><ExclamationTriangleIcon/></span>
                                     {errors.interestRate}</p>
-                            )}
+                            )} */}
                     </div>
 
                     {/* Compound Frequency */}
@@ -152,16 +151,16 @@ const InputForm: React.FC<InputFormProps> = ({ inputValues, onValuesChange }) =>
                                 maxLength={9}
                                 className={`w-full border-[0.5px] rounded-sm p-3 pl-8 ${
                                     errors.contributionAmount 
-                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-2 focus:ring-[#800010] focus:outline-none" 
+                                    ? "border-red-500 bg-red-100 focus:border-[#800010] focus:ring-1 focus:ring-[#800010] focus:outline-none" 
                                     : "border-black focus:border-black focus:ring-1 focus:ring-black focus:outline-none"
                                 }  `}
                             />
                         </div>
-                        {errors.contributionAmount && (
+                        {/* {errors.contributionAmount && (
                                 <p className="text-[#800010] text-sm mt-1 flex">
                                     <span className="mt-1 mr-2"><ExclamationTriangleIcon/></span>
                                     {errors.contributionAmount}</p>
-                            )}
+                            )} */}
                     </div>
 
                     {/* Contribution Frequency */}

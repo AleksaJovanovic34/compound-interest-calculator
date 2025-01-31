@@ -12,9 +12,8 @@ const ChartData: React.FC<ChartProps> = ({ savings, interest }) => {
     chart: {
         type: "column",
         width: 801,
+        height: 400,
         borderRadius: 6,
-        // borderColor: 'black',
-        // borderWidth: 0.5,
         style : {
           fontFamily: 'Roboto Mono',
         },
@@ -44,7 +43,7 @@ const ChartData: React.FC<ChartProps> = ({ savings, interest }) => {
     tooltip: {
       shared: true,
       useHTML: true,
-      headerFormat: '<span style="font-size: 15px">{point.key}</span><br/>',
+      headerFormat: '<span style="font-size: 15px">Year {point.key}</span><br/>',
       pointFormat:
         '<span style="color:{series.color}">\u25CF</span> {series.name}: <b>${point.y:.2f}</b><br/>',
     },
@@ -52,6 +51,9 @@ const ChartData: React.FC<ChartProps> = ({ savings, interest }) => {
       column: {
         stacking: "normal",
         pointWidth: 80, // Adjust the width of the columns
+        animation: {
+          duration: 500,
+        },
       },
     },
     legend: {
@@ -61,7 +63,7 @@ const ChartData: React.FC<ChartProps> = ({ savings, interest }) => {
       },
     series: [
       {
-        name: "Savings",
+        name: "Principal",
         data: savings.map((value) => parseFloat(value.toFixed(2))), // Ensure proper formatting
         color: "#664282",
       },
@@ -77,7 +79,7 @@ const ChartData: React.FC<ChartProps> = ({ savings, interest }) => {
   console.log(savings);
   
 
-  return <div><HighchartsReact highcharts={Highcharts} options={options} /></div>;
+  return <div className="w-[801px] h-[400px] bg-white rounded-b-md shadow-lg"><HighchartsReact highcharts={Highcharts} options={options} /></div>;
 };
 
 //h-[494px] border-[0.5px] border-black p-10 pt-20 bg-[#FBF7F5] rounded-sm

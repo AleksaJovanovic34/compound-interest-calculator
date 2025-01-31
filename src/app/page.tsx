@@ -3,6 +3,7 @@
 import InputForm from "./ui/input-form";
 import ChartData from "./ui/chart";
 import { useState } from "react";
+import NumberFlow from '@number-flow/react'
 
 interface YearlyData {
   year: number;
@@ -124,17 +125,32 @@ export default function Home() {
         <div className="flex flex-col items-center gap-2">
           <div className="w-[800px]">
             <div className="flex justify-between gap-2">
-              <div className="flex flex-col justify-center items-center bg-white h-20 flex-1 rounded-md shadow-lg">
+              <div className="flex flex-col justify-center items-center bg-white h-20 flex-1 rounded-tl-md shadow-lg text-[#2A7E3B]">
                 <h3 className="font-bold text-sm">Total Balance</h3>
-                <p className="font-bold text-xl">${(totalSavings).toLocaleString()}</p>
+                {/* <p className="font-bold text-xl">${(totalSavings).toLocaleString()}</p> */}
+                <NumberFlow 
+                value={totalSavings}
+                format={{ style: 'currency', currency:'USD' }}
+                className="font-bold text-xl"
+                />
               </div>
-              <div className="flex flex-col justify-center items-center flex-1 rounded-md shadow-lg bg-[#664282] text-white">
+              <div className="flex flex-col justify-center items-center flex-1 shadow-lg bg-white text-[#664282]">
                 <h3 className="font-light text-sm">Total Principal</h3>
-                <p className="font-bold text-xl">${totalPrincipal.toLocaleString()}</p>
+                {/* <p className="font-bold text-xl">${totalPrincipal.toLocaleString()}</p> */}
+                <NumberFlow 
+                value={totalPrincipal}
+                format={{ style: 'currency', currency:'USD' }}
+                className="font-bold text-xl"
+                />
               </div>
-              <div className="flex flex-col justify-center items-center flex-1 rounded-md shadow-lg bg-[#99731a] text-white">
+              <div className="flex flex-col justify-center items-center flex-1 rounded-tr-md shadow-lg bg-white text-[#99731a]">
                 <h3 className="font-light text-sm">Total Interest</h3>
-                <p className="font-bold text-xl">${totalInterest.toLocaleString()}</p>
+                {/* <p className="font-bold text-xl">${totalInterest.toLocaleString()}</p> */}
+                <NumberFlow 
+                value={totalInterest}
+                format={{ style: 'currency', currency:'USD' }}
+                className="font-bold text-xl"
+                />
               </div>
             </div>
           </div>

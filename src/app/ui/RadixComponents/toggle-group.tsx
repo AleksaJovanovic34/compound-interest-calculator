@@ -8,13 +8,13 @@ interface ToggleGroupProps {
 
 const Toggle: React.FC <ToggleGroupProps> = ({ value, onChange }) => {
     return (
-        <ToggleGroup.Root defaultValue={value} onValueChange={onChange} type='single' className='w-full bg-white border-[0.5px] border-black rounded-sm text-center inline-flex'>
+        <ToggleGroup.Root defaultValue={value} onValueChange={onChange} type='single' className='w-full bg-white border-[0.5px] border-black rounded-sm text-center inline-flex p-1'>
 		    <ToggleGroup.Item value='Monthly' 
-                className={`flex-1 p-3 ${value === 'Monthly' ? 'bg-[#E8E8E8] rounded-r-md rounded-l-sm': ''}`}
+                className={`flex-1 p-3 ${value === 'Monthly' ? 'bg-[#E8E8E8] rounded-md': ''}`}
                 >Monthly
                 </ToggleGroup.Item>
             <ToggleGroup.Item value='Annually' 
-                className={`flex-1 p-3 ${value === 'Annually' ? 'bg-[#E8E8E8] rounded-l-md rounded-r-sm': ''}`}
+                className={`flex-1 p-3 ${value === 'Annually' ? 'bg-[#E8E8E8] rounded-md': ''}`}
                 >Annually
             </ToggleGroup.Item>
 	    </ToggleGroup.Root>
